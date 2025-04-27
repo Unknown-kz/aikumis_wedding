@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Айкүміс қыз ұзату</title>
+
+    <!-- Google Fonts - Elegant Pairing (Can be removed if you only use custom fonts) -->
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- CUSTOM FONTS --- */
+        /* IMPORTANT: Replace 'YourCustomFontName' with the actual name you want to use in CSS */
+        /* IMPORTANT: Replace the URLs with the actual paths to your font files (relative to index.html) */
+        /* You might need different formats (woff2, woff) for cross-browser compatibility */
+        /* Add separate @font-face rules for different weights (e.g., font-weight: 700;) if available */
+        /*
+        @font-face {
+            font-family: 'YourCustomFontName';
+            src: url('fonts/YourCustomFontName-Regular.woff2') format('woff2'),
+                 url('fonts/YourCustomFontName-Regular.woff') format('woff');
+            font-weight: 400;
+            font-style: normal;
+            font-display: swap; // Helps with font loading
+        }
+        @font-face {
+            font-family: 'YourCustomFontName';
+            src: url('fonts/YourCustomFontName-Bold.woff2') format('woff2'),
+                 url('fonts/YourCustomFontName-Bold.woff') format('woff');
+            font-weight: 700; // Adjust weight based on the font file
+            font-style: normal;
+            font-display: swap;
+        }
+        */
+        /* If you replace Google Fonts, update font-family rules below */
+
+
+        /* --- CSS Variables for easy color changes --- */
+        /* Adjust these colors to match your desired wedding theme */
+        :root {
+            --color-primary-accent: hsl(340, 35%, 40%); /* Muted Rose/Burgundy - Use for headings, main accents */
+            --color-secondary-accent: hsl(40, 60%, 75%); /* Soft Gold/Peach - Use for highlights, buttons, countdown numbers */
+            --color-background: hsl(30, 30%, 98%); /* Very light warm beige - Page background */
+            --color-container-background: #fff; /* White - Card/Container background */
+            --color-text-dark: hsl(0, 0%, 25%); /* Dark grey - Primary text color */
+            --color-text-medium: hsl(0, 0%, 40%); /* Medium grey - Secondary text color, paragraphs */
+            --color-border-light: hsl(30, 15%, 90%); /* Light warm grey border - Separators */
+
+            /* Button Specific Colors (using original icon colors now, so button background can be consistent) */
+            --color-button-default: var(--color-primary-accent); /* Example: Main buttons use primary accent */
+            /* Specific button background colors (can be adjusted or removed if using default) */
+            --color-button-instagram-bg: #e1306c; /* Instagram */
+            --color-button-instagram-end: #c13584; /* Instagram gradient end (optional, can use mix) */
+            --color-button-2gis-bg: #4caf50; /* 2GIS */
+            --color-button-photo-bg: hsl(210, 60%, 50%); /* Photo Gallery */
+
+            --spacing-unit: 1rem; /* Base spacing unit (16px usually) */
+        }
+
+        /* --- Basic Reset/Base Styles --- */
+        body {
+            font-family: 'Open Sans', sans-serif; /* Replace with 'YourCustomFontName' if using custom fonts */
+            margin: 0;
+            padding: 0;
+            background-color: var(--color-background);
+            color: var(--color-text-dark);
+            line-height: 1.6;
+            overflow-x: hidden; /* Prevent horizontal scroll caused by transform on hover */
+            padding: calc(var(--spacing-unit) * 1.5); /* Add padding around the container on larger screens */
+            box-sizing: border-box;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Cormorant Garamond', serif; /* Replace with 'YourCustomFontName' if using custom fonts */
+            color: var(--color-primary-accent);
+            margin-top: 0;
+            margin-bottom: var(--spacing-unit);
+            font-weight: 700;
+            line-height: 1.2; /* Tighter line height for headings */
+        }
+
+        p {
+            font-family: 'Open Sans', sans-serif; /* Replace with 'YourCustomFontName' if using custom fonts */
+            margin-bottom: var(--spacing-unit);
+            line-height: 1.7; /* Increased line height for better readability */
+            color: var(--color-text-medium); /* Default paragraph color */
+        }
+
+        strong {
+             color: var(--color-text-dark); /* Labels are dark and clear */
+        }
+
+        .container {
+            max-width: 700px; /* Adjust as needed */
+            margin: 0 auto; /* Center the container */
+            background-color: var(--color-container-background); /* Use variable */
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); /* More pronounced shadow */
+            border-radius: 12px; /* More rounded corners */
+            overflow: hidden; /* Hide overflow from border-radius */
+            margin-bottom: calc(var(--spacing-unit) * 2); /* Space below container */
+        }
+
+        section {
+             padding: calc(var(--spacing-unit) * 2); /* Consistent padding for sections */
+             border-bottom: 1px solid var(--color-border-light); /* Light separator */
+              /* --- Initial state for scroll animation --- */
+             opacity: 0;
+             transform: translateY(20px);
+             transition: opacity 0.6s ease-out, transform 0.6s ease-out; /* Animation duration and timing */
+        }
+
+         /* State when section is visible (added by JS) */
+         section.is-visible {
+             opacity: 1;
+             transform: translateY(0);
+         }
+
+
+        section:last-child {
+             border-bottom: none; /* No border on the last section */
+        }
+
+
+        /* --- Top Illustration Section --- */
+        .top-illustration {
+            width: 100%;
+            height: 500px; /* Adjust height based on your image */
+            /* IMPORTANT: Replace 'main.jpg' with your actual image file name (place it in the same folder) */
+            background-image: url('main.jpg'); /* Using relative path */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            position: relative;
+            /* Removed music icon, so no need for flex alignment here unless you add something else */
+            /* display: flex; justify-content: flex-end; align-items: flex-start; padding: var(--spacing-unit); */
+            box-sizing: border-box;
+             /* This section is visible initially, override animation start state */
+             opacity: 1;
+             transform: translateY(0);
+             transition: none; /* No animation on the first section */
+        }
+
+        /* Overlay for better text contrast */
+        .top-illustration::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.2); /* Semi-transparent dark overlay */
+            z-index: 1; /* Below content */
+        }
+
+        /* IMPORTANT: .music-icon CSS rules are commented out as the element is removed from HTML */
+        /*
+        .music-icon {
+             width: calc(var(--spacing-unit) * 2.5);
+             height: calc(var(--spacing-unit) * 2.5);
+             border-radius: 50%;
+             display: flex;
+             justify-content: center;
+             align-items: center;
+             font-size: calc(var(--spacing-unit) * 1.5);
+             color: #fff;
+             background-color: rgba(0, 0, 0, 0.5);
+             cursor: pointer;
+             box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+             z-index: 10;
+             position: relative;
+             transition: background-color 0.3s ease;
+        }
+        .music-icon:hover {
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+        */
+
+
+        .bird-icon {
+            display: block;
+            margin: calc(var(--spacing-unit) * 1.5) auto var(--spacing-unit) auto; /* Center it below the text, add vertical space */
+            width: 70px; /* Adjust size */
+            opacity: 0.9;
+        }
+
+        /* --- Invitation Text Section --- */
+        .invitation-text {
+            text-align: center;
+        }
+
+        .invitation-text p {
+            margin: var(--spacing-unit) 0;
+            font-size: 1.1em;
+             /* Uses default paragraph color from p{} rule */
+        }
+
+        .bride-name {
+            font-family: 'Cormorant Garamond', serif; /* Replace with 'YourCustomFontName' if using custom fonts */
+            font-size: 3.5em; /* Larger font for the name */
+            color: var(--color-primary-accent);
+            margin: 0.1em 0;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        /* --- Event Details Section (Updated Style) --- */
+        .event-details {
+            text-align: center;
+            padding: calc(var(--spacing-unit) * 2); /* Consistent padding */
+        }
+
+        .event-details > div {
+            margin-bottom: calc(var(--spacing-unit) * 1.5); /* Space between blocks (Owners, Date/Time, Location) */
+        }
+
+        .event-details > div:last-child {
+            margin-bottom: 0; /* No margin after the last block */
+        }
+
+        .event-details .event-label {
+             font-size: 0.9em; /* Smaller size for labels */
+             color: var(--color-text-medium); /* Muted color for labels */
+             margin-bottom: calc(var(--spacing-unit) * 0.25); /* Space below label */
+             font-weight: 400; /* Not bold */
+             line-height: 1.4;
+             display: block; /* Ensure label is on its own line */
+        }
+
+        .event-details .event-value {
+             font-family: 'Cormorant Garamond', serif; /* Replace with 'YourCustomFontName' if using custom fonts for headers */
+             font-size: 1.8em; /* Larger size for main values */
+             color: var(--color-primary-accent); /* Accent color for values */
+             margin: 0; /* Remove default paragraph margin */
+             line-height: 1.2; /* Tighter line height for values */
+             font-weight: 700; /* Bold */
+             display: block; /* Ensure value is on its own line */
+        }
+
+        /* Specific adjustments for Date/Time and Location */
+        .event-details .event-date {
+             font-size: 2em; /* Date can be slightly larger */
+             color: var(--color-primary-accent); /* Date color can be the main accent */
+        }
+         .event-details .event-time {
+             font-size: 1em; /* Time is smaller */
+             color: var(--color-text-medium);
+             margin-top: calc(var(--spacing-unit) * 0.2); /* Small space above time */
+             margin-bottom: 0;
+             line-height: 1.4;
+             display: block;
+         }
+         .event-details .event-restaurant {
+              font-size: 1.8em; /* Restaurant name size */
+             color: var(--color-primary-accent); /* Restaurant name color */
+         }
+         .event-details .event-city {
+             font-size: 1em; /* City is smaller */
+             color: var(--color-text-medium);
+             margin-top: calc(var(--spacing-unit) * 0.2); /* Small space above city */
+             margin-bottom: 0;
+             line-height: 1.4;
+             display: block;
+         }
+
+
+        /* --- Buttons Section --- */
+        .buttons {
+            text-align: center;
+            display: flex; /* Use flexbox for button layout */
+            flex-wrap: wrap; /* Allow buttons to wrap on small screens */
+            justify-content: center; /* Center buttons */
+            gap: var(--spacing-unit); /* Space between buttons */
+        }
+
+        .button {
+            display: inline-flex; /* Use flex for centering content */
+            align-items: center; /* Vertically align icon and text */
+            justify-content: center; /* Center horizontally */
+            padding: calc(var(--spacing-unit) * 0.75) calc(var(--spacing-unit) * 1.5); /* Padding based on spacing unit */
+            background-color: var(--color-button-default); /* Default button color */
+            color: #fff;
+            text-decoration: none;
+            border-radius: calc(var(--spacing-unit) * 1.5); /* Pill shape based on spacing */
+            font-size: 1em;
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease; /* Add transform for subtle press effect */
+            border: none;
+            cursor: pointer;
+            min-width: 160px; /* Minimum width for buttons */
+            font-weight: 600;
+            text-transform: uppercase; /* Make text uppercase */
+            box-sizing: border-box; /* Include padding and border in element's total width */
+        }
+
+        .button:hover {
+            background-color: color-mix(in srgb, var(--color-button-default) 85%, black); /* Slightly darker hover */
+            transform: translateY(-3px); /* Lift slightly on hover */
+            box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+        }
+         .button:active {
+             transform: translateY(0); /* Press effect */
+             box-shadow: none;
+             background-color: color-mix(in srgb, var(--color-button-default) 70%, black);
+         }
+
+
+        .button img {
+            height: calc(var(--spacing-unit) * 1.2); /* Adjust icon size based on spacing */
+            margin-right: calc(var(--spacing-unit) * 0.5); /* Space between icon and text */
+            /* Filter removed to keep original icon colors */
+             filter: none;
+             flex-shrink: 0; /* Prevent icon from shrinking */
+        }
+
+        /* Specific Button Styles - Override default */
+        .instagram-button {
+            background: linear-gradient(45deg, var(--color-button-instagram-bg), var(--color-button-instagram-end)); /* Optional: Add gradient */
+            background-color: var(--color-button-instagram-bg); /* Fallback */
+             color: #fff; /* Ensure text is white on colorful button */
+        }
+        .instagram-button:hover {
+            background: linear-gradient(45deg, color-mix(in srgb, var(--color-button-instagram-bg) 85%, black), color-mix(in srgb, var(--color-button-instagram-end) 85%, black));
+             background-color: color-mix(in srgb, var(--color-button-instagram-bg) 85%, black); /* Fallback */
+        }
+         .instagram-button:active {
+             background: linear-gradient(45deg, color-mix(in srgb, var(--color-button-instagram-bg) 70%, black), color-mix(in srgb, var(--color-button-instagram-end) 70%, black));
+             background-color: color-mix(in srgb, var(--color-button-instagram-bg) 70%, black); /* Fallback */
+         }
+
+
+        .2gis-button {
+             background-color: var(--color-button-2gis-bg);
+             color: #fff; /* Ensure text is white */
+        }
+        .2gis-button:hover {
+             background-color: color-mix(in srgb, var(--color-button-2gis-bg) 85%, black);
+        }
+         .2gis-button:active {
+             background-color: color-mix(in srgb, var(--color-button-2gis-bg) 70%, black);
+         }
+
+         .photo-button {
+            background-color: var(--color-button-photo-bg);
+            color: #fff; /* Ensure text is white */
+        }
+        .photo-button:hover {
+             background-color: color-mix(in srgb, var(--color-button-photo-bg) 85%, black);
+        }
+         .photo-button:active {
+             background-color: color-mix(in srgb, var(--color-button-photo-bg) 70%, black);
+         }
+         /* IMPORTANT: Removed filter for photo button icon too */
+         .photo-button img {
+            filter: none;
+        }
+
+
+        /* --- Countdown Section --- */
+        .countdown {
+            text-align: center;
+        }
+
+        .countdown h2 {
+             margin-bottom: calc(var(--spacing-unit) * 1.5);
+        }
+
+        #timer {
+            display: flex;
+            justify-content: center;
+            gap: calc(var(--spacing-unit) * 1.5); /* Space between units */
+            font-size: 1.5em;
+            flex-wrap: wrap; /* Allow wrapping on small screens */
+        }
+
+        #timer div {
+            text-align: center;
+            min-width: 70px; /* Ensure units have minimum width */
+        }
+
+        #timer span {
+            display: block;
+            font-family: 'Cormorant Garamond', serif; /* Replace with 'YourCustomFontName' if using custom fonts for headers */
+            font-size: 2.5em; /* Larger numbers */
+            font-weight: 700;
+            color: var(--color-secondary-accent); /* Accent color for numbers */
+            margin-bottom: calc(var(--spacing-unit) * 0.25);
+        }
+
+        .countdown .label {
+             font-family: 'Open Sans', sans-serif; /* Replace with 'YourCustomFontName' if using custom fonts */
+            font-size: 0.9em;
+            color: var(--color-text-medium);
+        }
+
+        /* --- RSVP Form Section --- */
+        .rsvp {
+            text-align: center;
+        }
+
+        .rsvp h2 {
+            margin-bottom: calc(var(--spacing-unit) * 1.5);
+        }
+
+        .rsvp form {
+            display: inline-block; /* Center the form itself */
+            text-align: left; /* Align form elements to the left within the form */
+            width: 100%; /* Full width within padding */
+            max-width: 450px; /* Max width for the form */
+            margin: 0 auto; /* Center the form */
+        }
+
+        .form-group {
+            margin-bottom: calc(var(--spacing-unit) * 1.2); /* More space between groups */
+        }
+
+        .form-group label {
+            display: block; /* Label on its own line for the name input */
+            margin-bottom: calc(var(--spacing-unit) * 0.5); /* Space below name label */
+            font-weight: 600;
+            color: var(--color-text-dark);
+        }
+         .rsvp .form-note {
+             font-size: 0.85em;
+             color: var(--color-text-medium);
+             margin-top: calc(var(--spacing-unit) * 0.25);
+             margin-bottom: 0;
+             text-align: center; /* Center the note */
+         }
+
+        .rsvp input[type="text"] {
+            font-family: 'Open Sans', sans-serif; /* Replace with 'YourCustomFontName' */
+            width: calc(100% - 24px); /* Full width minus padding/border */
+            padding: calc(var(--spacing-unit) * 0.75);
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1em;
+            box-sizing: border-box;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+         .rsvp input[type="text"]:focus {
+             outline: none;
+             border-color: var(--color-secondary-accent);
+             box-shadow: 0 0 5px color-mix(in srgb, var(--color-secondary-accent) 50%, transparent); /* Subtle focus glow */
+         }
+
+         /* Style for radio buttons and their labels */
+         fieldset {
+             border: none;
+             padding: 0;
+             margin: 0;
+         }
+
+         legend {
+             /* For accessibility but visually hidden */
+             position: absolute;
+             width: 1px;
+             height: 1px;
+             margin: -1px;
+             padding: 0;
+             overflow: hidden;
+             clip: rect(0, 0, 0, 0);
+             border: 0;
+         }
+
+
+        .form-group input[type="radio"] {
+             vertical-align: middle;
+             cursor: pointer;
+             margin-right: calc(var(--spacing-unit) * 0.5);
+             /* Styling native radio buttons is hard. For a truly 'pro' look,
+                you might hide this and style a custom element. */
+        }
+
+        .form-group input[type="radio"] + label {
+             font-family: 'Open Sans', sans-serif; /* Replace with 'YourCustomFontName' */
+             display: inline-block;
+             font-weight: normal;
+             cursor: pointer;
+             color: var(--color-text-dark);
+             margin-bottom: calc(var(--spacing-unit) * 0.5); /* Space between radio options */
+             line-height: 1.4; /* Tighter line height for radio options */
+        }
+
+
+        .rsvp button[type="submit"] {
+            font-family: 'Open Sans', sans-serif; /* Replace with 'YourCustomFontName' */
+            display: block;
+            width: 100%;
+            padding: calc(var(--spacing-unit) * 0.75);
+            background-color: var(--color-secondary-accent); /* Use secondary accent color */
+            color: var(--color-text-dark); /* Dark text on light button */
+            border: none;
+            border-radius: calc(var(--spacing-unit) * 1.5);
+            font-size: 1.1em;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            margin-top: calc(var(--spacing-unit) * 1.5);
+             text-transform: uppercase;
+        }
+
+        .rsvp button[type="submit"]:hover {
+            background-color: color-mix(in srgb, var(--color-secondary-accent) 85%, black);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+        }
+         .rsvp button[type="submit"]:active {
+             transform: translateY(0);
+             box-shadow: none;
+             background-color: color-mix(in srgb, var(--color-secondary-accent) 70%, black);
+         }
+
+        #formMessage {
+            margin-top: var(--spacing-unit);
+            font-weight: 600;
+            min-height: 1.2em; /* Reserve space to prevent layout shift */
+             text-align: center;
+        }
+
+
+        /* --- Photo Link Section --- */
+        .photo-link {
+             text-align: center;
+             /* No border-bottom as it's likely the last section before footer */
+        }
+
+
+        /* --- Optional: Photo Gallery Section --- */
+        .photo-gallery {
+             padding: calc(var(--spacing-unit) * 2);
+             text-align: center;
+             border-bottom: 1px solid var(--color-border-light);
+        }
+        .photo-gallery h2 {
+            font-family: 'Cormorant Garamond', serif; /* Replace with 'YourCustomFontName' */
+             margin-bottom: calc(var(--spacing-unit) * 1.5);
+        }
+        .gallery-grid {
+             display: grid;
+             grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); /* Responsive grid */
+             gap: var(--spacing-unit); /* Space between images */
+             margin-top: var(--spacing-unit);
+        }
+        .gallery-grid img {
+             width: 100%;
+             height: auto; /* Maintain aspect ratio */
+             border-radius: 5px;
+             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+             cursor: pointer; /* Indicate clickable (if you add lightbox) */
+             transition: transform 0.2s ease, box-shadow 0.2s ease;
+             display: block; /* Remove extra space below images */
+             object-fit: cover; /* Ensure images fill their grid area nicely if varying sizes */
+        }
+         .gallery-grid img:hover {
+             transform: scale(1.03); /* Subtle zoom on hover */
+             box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+         }
+
+        /* --- Footer --- */
+        footer {
+             font-family: 'Open Sans', sans-serif; /* Replace with 'YourCustomFontName' */
+            text-align: center;
+            padding: var(--spacing-unit) calc(var(--spacing-unit) * 2);
+            font-size: 0.9em;
+            color: var(--color-text-medium);
+             /* Initial state for scroll animation */
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out; /* Animation duration and timing */
+        }
+
+         /* State when footer is visible (added by JS) */
+         footer.is-visible {
+             opacity: 1;
+             transform: translateY(0);
+         }
+
+
+        /* --- Helper Classes --- */
+        .visually-hidden {
+             position: absolute;
+             width: 1px;
+             height: 1px;
+             margin: -1px;
+             padding: 0;
+             overflow: hidden;
+             clip: rect(0, 0, 0, 0);
+             border: 0;
+        }
+
+
+        /* --- Responsive Adjustments --- */
+        @media (max-width: 768px) {
+             body {
+                 padding: 0; /* Remove padding around the container */
+             }
+            .container {
+                box-shadow: none; /* Remove box shadow on smaller screens */
+                 border-radius: 0; /* Remove rounded corners */
+            }
+
+            section {
+                 padding: calc(var(--spacing-unit) * 1.5); /* Slightly less padding */
+            }
+
+            .top-illustration {
+                height: 350px; /* Make illustration shorter on small screens */
+                 padding: var(--spacing-unit);
+            }
+
+             /* Removed music icon, so no music icon specific responsive styles needed */
+
+
+            .bride-name {
+                font-size: 3em; /* Slightly smaller font */
+            }
+
+            #timer {
+                gap: var(--spacing-unit); /* Less space between units */
+                font-size: 1em;
+            }
+
+            #timer span {
+                font-size: 2em;
+            }
+
+            .button {
+                 width: calc(50% - var(--spacing-unit)); /* Two buttons per row, considering gap */
+                 min-width: unset; /* Remove min-width constraint */
+                 padding: calc(var(--spacing-unit) * 0.6) calc(var(--spacing-unit));
+                 font-size: 0.9em;
+            }
+
+             .buttons {
+                 gap: var(--spacing-unit); /* Maintain gap */
+             }
+
+            .rsvp form {
+                max-width: 100%; /* Allow form to take full width */
+            }
+
+            .rsvp input[type="text"] {
+                width: calc(100% - 24px); /* Re-calculate width */
+            }
+
+             /* Adjust event details text sizes */
+             .event-details .event-value {
+                 font-size: 1.6em;
+             }
+             .event-details .event-date {
+                 font-size: 1.8em;
+             }
+             .event-details .event-label,
+             .event-details .event-time,
+             .event-details .event-city {
+                 font-size: 0.9em;
+             }
+
+
+             .gallery-grid {
+                 gap: calc(var(--spacing-unit) * 0.75);
+                 grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+             }
+
+            footer {
+                 padding: calc(var(--spacing-unit) * 1.5);
+            }
+        }
+
+         @media (max-width: 480px) {
+             section {
+                 padding: var(--spacing-unit);
+             }
+             .top-illustration {
+                 height: 300px;
+             }
+             .bride-name {
+                 font-size: 2.5em;
+             }
+             #timer {
+                 gap: calc(var(--spacing-unit) * 0.75);
+             }
+             #timer span {
+                 font-size: 1.8em;
+             }
+              .countdown .label {
+                 font-size: 0.8em;
+              }
+              .button {
+                 width: calc(100% - var(--spacing-unit) * 2); /* Buttons take full width minus section padding */
+                 margin: calc(var(--spacing-unit) * 0.4) auto; /* Center full width buttons */
+                 padding: calc(var(--spacing-unit) * 0.6);
+              }
+              .buttons {
+                  flex-direction: column; /* Stack buttons vertically */
+                  gap: calc(var(--spacing-unit) * 0.8); /* Space between stacked buttons */
+                  align-items: stretch; /* Stretch buttons to fill container */
+              }
+              .rsvp input[type="text"] {
+                 width: calc(100% - 20px); /* Adjust padding */
+                 padding: calc(var(--spacing-unit) * 0.6);
+             }
+             .form-group label, .form-group input[type="radio"] + label {
+                 font-size: 0.95em;
+             }
+             .form-group input[type="radio"] + label {
+                margin-bottom: calc(var(--spacing-unit) * 0.7); /* More space between radio options on tiny screens */
+             }
+              .gallery-grid {
+                 gap: calc(var(--spacing-unit) * 0.5);
+                 grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+             }
+             footer {
+                  padding: var(--spacing-unit);
+             }
+
+            /* Further adjust event details text sizes for very small screens */
+            .event-details .event-value {
+                 font-size: 1.4em;
+             }
+             .event-details .event-date {
+                 font-size: 1.6em;
+             }
+             .event-details .event-label,
+             .event-details .event-time,
+             .event-details .event-city {
+                 font-size: 0.85em;
+             }
+         }
+
+    </style>
+</head>
+<body>
+
+    <!-- Audio element for background music -->
+    <!-- Add 'loop' attribute to loop the music -->
+    <!-- 'autoplay' attribute is INCLUDED BUT MAY BE BLOCKED BY BROWSERS. -->
+    <!-- IMPORTANT: Replace "music.mp3" with your audio file name (place it in the same folder) -->
+     <audio id="background-music" src="music.mp3" loop autoplay preload="auto"></audio>
+
+
+    <div class="container">
+
+        <!-- Top Section with Illustration/Image -->
+        <!-- IMPORTANT: Replace 'main.jpg' with your actual image file name (place it in the same folder) -->
+        <div class="top-illustration" style="background-image: url('main.jpg');">
+            <!-- IMPORTANT: Music icon removed as per request -->
+            <!-- <div class="music-icon" id="musicIcon"> 🎵 </div> -->
+        </div>
+
+        <!-- Invitation Text Section -->
+        <section class="invitation-text">
+            <p>ҚҰРМЕТТІ АҒАЙЫН-ТУЫС, ҚҰДА-ЖЕКЖАТ, ДОС-ЖАРАНДАР!</p>
+            <p>Сіздерді аяулы қызымыз</p>
+            <h1 class="bride-name">Айкүмістің</h1>
+            <p>ұзату тойына арналған ақ дастарханымыздың қадірлі<br>қонағы болуға шақырамыз</p>
+             <!-- IMPORTANT: Replace 'bird.png' with your bird icon image file name (place it in the same folder) -->
+             <img src="bird.png" alt="Құс белгісі" class="bird-icon">
+        </section>
+
+        <!-- Event Details Section (Updated HTML Structure & Styling) -->
+        <section class="event-details">
+            <div>
+                <!-- IMPORTANT: Swapped Label and Value positions as per the provided image style -->
+                <p class="event-value">Той иелері:</p>
+                <p class="event-label">Папа мен Мамасы</p>
+            </div>
+            <div>
+                <p class="event-value event-date">08.08.2025 жыл</p>
+                <p class="event-label event-time">сағат 17.00 де</p>
+            </div>
+            <div>
+                <p class="event-value event-restaurant">Astana Banquet Hall</p>
+                <p class="event-label event-city">Астана қаласы</p>
+            </div>
+        </section>
+
+        <!-- Buttons Section (Instagram, 2GIS) -->
+        <section class="buttons">
+            <!-- IMPORTANT: Replace 'insta.png' with your icon file name (place it in the same folder) and the href with your Instagram profile URL -->
+            <a href="https://www.instagram.com/kurmetova_aikumis/" target="_blank" class="button instagram-button">
+                <img src="insta.png" alt="Instagram icon"> Instagram
+            </a>
+             <!-- IMPORTANT: Replace '2gis.png' with your icon file name (place it in the same folder) and the href with your actual 2GIS link for the restaurant -->
+             <!-- Get this link from the 2gis website or app sharing feature -->
+            <a href="https://2gis.kz/astana/firm/70000001093466963/71.493474%2C51.145582?m=71.493453%2C51.145452%2F19.62" target="_blank" class="button 2gis-button">
+                 <img src="2gis.png" alt="2GIS icon"> 2GIS Маршрут
+            </a>
+        </section>
+
+        <!-- Countdown Section -->
+        <section class="countdown">
+            <h2>Тойдың басталуына:</h2>
+            <div id="timer">
+                <div>
+                    <span class="days"></span>
+                    <div class="label">күн</div>
+                </div>
+                <div>
+                    <span class="hours"></span>
+                    <div class="label">сағат</div>
+                </div>
+                <div>
+                    <span class="minutes"></span>
+                    <div class="label">минут</div>
+                </div>
+                <div>
+                    <span class="seconds"></span>
+                    <div class="label">секунд</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- RSVP Form Section -->
+        <section class="rsvp">
+            <h2>Тойға келесіз бе?</h2>
+            <form id="rsvpForm">
+                <div class="form-group">
+                    <!-- IMPORTANT: Updated label text as per request -->
+                    <label for="name">Аты-жөніңізді жазыңыз:</label>
+                    <input type="text" id="name" name="name" required placeholder="Аты-жөніңіз" aria-label="Аты-жөніңізді жазыңыз">
+                     <!-- Added the note about children below the input -->
+                     <p class="form-note">Ескерту: балаларды тойға ертіп келмеңіз!</p>
+                </div>
+                 <fieldset class="form-group">
+                     <legend class="visually-hidden">Келу туралы жауабыңыз</legend>
+                    <div>
+                        <input type="radio" id="option1" name="attendance" value="Келемін, бұйырса" required>
+                        <label for="option1">Келемін, бұйырса</label>
+                    </div>
+                    <div>
+                         <input type="radio" id="option2" name="attendance" value="Жұбайыммен барамын" required>
+                         <label for="option2">Жұбайыммен барамын</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="option3" name="attendance" value="Өкінішке орай, келе алмаймын" required>
+                        <label for="option3">Өкінішке орай, келе алмаймын</label>
+                    </div>
+                 </fieldset>
+
+                <button type="submit">Жауапты жіберемін</button>
+            </form>
+            <!-- Message area for form feedback -->
+            <p id="formMessage"></p> <!-- style="display: none;" will be added by JS -->
+        </section>
+
+        <!-- Photo Gallery Link Section -->
+        <section class="photo-link">
+            <!-- IMPORTANT: Replace 'camera.png' with your icon file name (place it in the same folder) and the href with your actual photo gallery link -->
+             <!-- IMPORTANT: Replace 'https://t.me/by_qazaqboy' with the actual link to your Telegram channel, Google Drive folder, etc. -->
+            <a href="https://t.me/by_qazaqboy" target="_blank" class="button photo-button">
+                 <img src="camera.png" alt="Camera icon"> ТОЙДЫҢ ФОТОЛАРЫ
+            </a>
+        </section>
+
+         <!-- Photo Gallery Section -->
+         <!-- IMPORTANT: Replace the src with your photo file names (place them in the same folder) and add descriptive alt text -->
+         <section class="photo-gallery">
+             <h2>Фотогаллерея</h2>
+             <div class="gallery-grid">
+                 <img src="pose1.png" alt="Айкүмістің той фотосы 1">
+                 <img src="pose2.png" alt="Айкүмістің той фотосы 2">
+                 <img src="pose3.png" alt="Айкүмістің той фотосы 3">
+                 <!-- Add more image tags here, replacing src and alt text -->
+             </div>
+         </section>
+
+
+
+        <!-- Optional: Footer -->
+        <footer>
+            <p>© 2025 Сайтты жасаған Жуман</p>
+        </footer>
+
+    </div>
+
+    <script>
+        // --- JAVASCRIPT ---
+
+        // --- Countdown Timer ---
+        const countdown = () => {
+            // IMPORTANT: Set the DATE and TIME of the wedding here.
+            // Format: "Month Day, Year Hour:Minute:Second" (e.g., "July 15, 2024 18:30:00")
+            // Note: Month is case-sensitive (e.g., "August" not "august")
+            const weddingDate = new Date("August 8, 2025 17:00:00").getTime(); // <-- СІЗДІҢ ТОЙЫҢЫЗДЫҢ КҮНІ МЕН УАҚЫТЫН ОСЫ ЖЕРГЕ ЖАЗЫҢЫЗ
+
+            // Update the timer every second
+            const x = setInterval(() => {
+                const now = new Date().getTime();
+                const distance = weddingDate - now;
+
+                // Calculate time units
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                // Display the result in the elements, add leading zero if less than 10 and not negative
+                document.querySelector(".days").innerText = days < 10 && days >= 0 ? '0' + days : days;
+                document.querySelector(".hours").innerText = hours < 10 && hours >= 0 ? '0' + hours : hours;
+                document.querySelector(".minutes").innerText = minutes < 10 && minutes >= 0 ? '0' + minutes : minutes;
+                document.querySelector(".seconds").innerText = seconds < 10 && seconds >= 0 ? '0' + seconds : seconds;
+
+                // If the countdown is finished (distance is negative)
+                if (distance < 0) {
+                    clearInterval(x); // Stop the interval
+                    // Set timer to 00s
+                    document.querySelector(".days").innerText = '00';
+                    document.querySelector(".hours").innerText = '00';
+                    document.querySelector(".minutes").innerText = '00';
+                    document.querySelector(".seconds").innerText = '00';
+                    // Display final message
+                    document.getElementById("timer").innerHTML = "<h3>Той басталды! Құтты болсын!</h3>";
+                }
+            }, 1000); // Update every 1000ms (1 second)
+        };
+
+        // Start the countdown timer
+        countdown();
+
+        // --- Automatic Music Play on Load ---
+        // IMPORTANT: Browsers may block this if there's no prior user interaction.
+        // If it doesn't work, the music will not play automatically.
+        const backgroundMusic = document.getElementById('background-music'); // Get the audio element
+
+        if (backgroundMusic) {
+             // Set volume (0.0 to 1.0) - 0.5 is medium
+             backgroundMusic.volume = 0.5;
+
+             // Attempt to play the music after a short delay to allow elements to load
+             // window.onload is one option, or simply let the 'autoplay' attribute try
+             // Adding a small delay might sometimes help or prevent errors, but doesn't bypass policy
+             setTimeout(() => {
+                 backgroundMusic.play().then(() => {
+                    // Playback started successfully (in browsers that allow autoplay)
+                    console.log("Музыка ойнай бастады.");
+                 }).catch(e => {
+                    // Playback failed (likely due to autoplay policy)
+                    console.error("Музыканы автоматты ойнату мүмкін болмады:", e);
+                    // No music icon, so user cannot start it manually now.
+                 });
+             }, 100); // Small delay
+
+             // IMPORTANT: Music icon related JavaScript is removed as the icon is removed from HTML.
+        } else {
+            console.error("Музыка элементы табылған жоқ. music.mp3 файлы бар ма және audio тегі дұрыс па тексеріңіз.");
+        }
+
+
+        // --- RSVP Form Submission (Frontend part) ---
+        const rsvpForm = document.getElementById('rsvpForm');
+        const formMessage = document.getElementById('formMessage'); // Element to display feedback message
+
+        // Hide the message initially via JS
+        formMessage.style.display = 'none';
+
+        rsvpForm.addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default browser form submission (page reload)
+
+            // Get form data
+            const nameInput = document.getElementById('name');
+            const attendanceInput = document.querySelector('input[name="attendance"]:checked');
+
+             // Basic validation: Check if name is entered and an attendance option is selected
+             if (!nameInput.value.trim() || !attendanceInput) {
+                 formMessage.innerText = 'Аты-жөніңізді жазып, келу туралы жауабыңызды таңдаңыз.';
+                 formMessage.style.color = 'red'; // Error message color
+                 formMessage.style.display = 'block'; // Show message
+                 return; // Stop the function execution
+             }
+
+            const name = nameInput.value.trim(); // Get name and remove leading/trailing whitespace
+            const attendance = attendanceInput.value; // Get the selected radio button value
+
+            // Construct the data object to send to the backend
+            const formData = {
+                name: name, // Аты-жөнін жібереміз
+                attendance: attendance // Келу/келмеу жауабын жібереміз
+                // Backend кодыңыз қажет етсе, қосымша деректерді осы жерге қосуға болады
+            };
+
+
+            // --- БҰЛ ЖЕРДЕ СІЗДІҢ BACKEND-КЕ FETCH АРҚЫЛЫ СҰРАУЫҢЫЗ БОЛУЫ КЕРЕК ---
+            // Backend URL-іңізді және оның қабылдау форматын осы жерге қойыңыз.
+            // Мысалы, егер backend JSON қабылдаса:
+
+            // 👇👇👇 ОСЫ ЖЕРГЕ КӨШІРІП АЛҒАН WEB APP URL-ІҢІЗДІ ҚОЙЫҢЫЗ 👇👇👇
+            // const backendUrl = 'YOUR_BACKEND_ENDPOINT_URL_FOR_TELEGRAM'; // Ескі плейсхолдер
+            const webAppUrl = 'https://script.google.com/macros/s/AKfycbwYLCgSsr-4pIIbDMxvdpssnzTtnSugMISJoB5CSAPMB52cYHAB2plYQzD3ZfOJzJVj/exec'; // <-- СІЗ СУРЕТТЕН КӨШІРГЕН СІЛТЕМЕ
+
+
+            // Loading хабарламасын көрсету
+            formMessage.innerText = 'Жауап жіберілуде...';
+            formMessage.style.color = '#007bff'; // Көкшіл түс (жүктелуді білдіреді)
+            formMessage.style.display = 'block';
+
+
+            // Fetch сұрауын Backend-ке жіберу
+            fetch(webAppUrl, 
+            { 
+                method: 'POST', // HTTP POST әдісі
+                mode: 'cors', // Cross-Origin Resource Sharing
+                headers: {
+                    'Content-Type': 'application/json', // Жіберілетін дерек форматы JSON
+                },
+                body: JSON.stringify(formData) // JavaScript объектін JSON жолына айналдырамыз
+            })
+            // === 👇👇👇 БҰДАН КЕЙІНГІ .then() ЖӘНЕ .catch() БЛОКТАРЫ FETCH СҰРАУЫНЫҢ НӘТИЖЕСІН ӨҢДЕЙДІ 👇👇👇 ===
+            .then(response => {
+                 // Серверден келген жауапты қабылдаймыз
+                 if (!response.ok) {
+                     // Егер HTTP статусы 2xx болмаса (мысалы, 404, 500), қате лақтырамыз
+                     // response.text() арқылы серверден келген қате мәтінін аламыз
+                     return response.text().then(text => { throw new Error(`HTTP қатесі! статус: ${response.status}, жауап: ${text}`) });
+                 }
+                 // Егер HTTP статусы OK болса, жауапты JSON ретінде парсинг жасаймыз
+                 // Backend (Apps Script) JSON форматында жауап қайтаруы керек {status: 'success', message: '...'}
+                 return response.json();
+            })
+            .then(data => {
+                // Backend-тен парсингтелген JSON дерегін өңдейміз
+                console.log('Backend жауабы:', data); // Консольға шығарамыз
+
+                // Backend жауабындағы 'status' өрісін тексереміз (егер backend солай қайтарса)
+                if (data && data.status === 'success') {
+                     // Backend сәтті жауап берсе
+                     formMessage.innerText = 'Рақмет, жауабыңыз қабылданды!'; // Пайдаланушыға сәтті хабарлама көрсетеміз
+                     formMessage.style.color = 'green'; // Жасыл түс
+                     // formMessage.style.display = 'block'; // Хабарлама қазірдің өзінде көрініп тұр
+                     rsvpForm.reset(); // Форманы тазалаймыз (input өрістерін, radio батырмаларын)
+                     // nameInput.value = ''; // reset() бар болғандықтан, бұл қажет емес
+                 } else {
+                     // Backend қате қайтарса немесе сәтті емес статус берсе
+                     // Backend-тен келген қате мәтінін көрсетеміз немесе жалпы қате
+                     formMessage.innerText = data.message || 'Жауап жіберуде қате шықты. Backend қатесі.';
+                     formMessage.style.color = 'orange'; // Сары түспен ескерту (Backend қатесін білдіреді)
+                     // formMessage.style.display = 'block';
+                 }
+            })
+            .catch((error) => {
+                // Fetch сұрауын жіберу кезінде желі қатесі шықса немесе .then блогында қате туындаса
+                console.error('Форманы жіберу қатесі:', error); // Қатені консольға шығарамыз
+
+                // Пайдаланушыға қате туралы хабарлама көрсетеміз
+                formMessage.innerText = 'Жауап жіберуде желі қатесі шықты немесе серверге қосыла алмады. Интернет байланысын тексеріп, қайта жіберіп көріңіз.';
+                formMessage.style.color = 'red'; // Қызыл түспен қате
+                formMessage.style.display = 'block';
+            });
+
+
+            // === 👆👆👆 FETCH СҰРАУЫНЫҢ БЛОГЫНЫҢ СОҢЫ ===
+
+            // --- МЫНА АСТЫНДАҒЫ ОРЫНБАСАР (PLACEHOLDER) БЛОГЫН ӨШІРІП ТАСТАҢЫЗ ---
+            // ОЛ ТЕК BACKEND ҚОСЫЛМАҒАНДА УАҚЫТША ҚОЛДАНЫЛҒАН
+            /* (Осы жерден бастап, суреттегі көк аймақтың соңына дейінгі кодты өшіріңіз)
+             formMessage.innerText = 'Рақмет, жауабыңыз қабылданды! (Ескерту: бұл жауап әлі Telegram-ға жіберілмейді, backend қосу қажет)';
+             formMessage.style.color = 'orange';
+             formMessage.style.display = 'block';
+             rsvpForm.reset();
+             nameInput.value = '';
+            */
+            // --- ОРЫНБАСАР БЛОГЫНЫҢ СОҢЫ ---
+
+
+        });
+
+
+        // --- Scroll Animation (Intersection Observer) ---
+        // Select elements that should animate as they scroll into view
+        // We will animate all sections except the first illustration one, and the footer
+        const sectionsToAnimate = document.querySelectorAll('section:not(.top-illustration), footer');
+
+        // Options for the Intersection Observer
+        const observerOptions = {
+            root: null, // Use the viewport as the root
+            rootMargin: '0px', // No margin around the root
+            threshold: 0.1 // Trigger when 10% of the element is visible
+        };
+
+        // Callback function for the observer
+        const observerCallback = (entries, observer) => {
+            entries.forEach(entry => {
+                // If the element is intersecting (in the viewport)
+                if (entry.isIntersecting) {
+                    // Add the 'is-visible' class to trigger the animation
+                    entry.target.classList.add('is-visible');
+                    // Stop observing the element once it's animated
+                    observer.unobserve(entry.target);
+                }
+            });
+        };
+
+        // Create a new Intersection Observer
+        const observer = new IntersectionObserver(observerCallback, observerOptions);
+
+        // Start observing each element selected when the DOM is fully loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            sectionsToAnimate.forEach(element => {
+                observer.observe(element);
+            });
+        });
+
+
+    </script>
+
+</body>
+</html>
