@@ -525,36 +525,36 @@
         }
 
 
-        /* --- Optional: Photo Gallery Section --- */
-        .photo-gallery {
-             padding: calc(var(--spacing-unit) * 2);
-             text-align: center;
-             border-bottom: 1px solid var(--color-border-light);
-        }
-        .photo-gallery h2 {
-            font-family: 'Cormorant Garamond', serif; /* Replace with 'YourCustomFontName' */
-             margin-bottom: calc(var(--spacing-unit) * 1.5);
-        }
-        .gallery-grid {
-             display: grid;
-             grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); /* Responsive grid */
-             gap: var(--spacing-unit); /* Space between images */
-             margin-top: var(--spacing-unit);
-        }
-        .gallery-grid img {
-             width: 100%;
-             height: auto; /* Maintain aspect ratio */
-             border-radius: 5px;
-             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-             cursor: pointer; /* Indicate clickable (if you add lightbox) */
-             transition: transform 0.2s ease, box-shadow 0.2s ease;
-             display: block; /* Remove extra space below images */
-             object-fit: cover; /* Ensure images fill their grid area nicely if varying sizes */
-        }
-         .gallery-grid img:hover {
-             transform: scale(1.03); /* Subtle zoom on hover */
-             box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+         /* --- Optional: Photo Gallery Section --- */
+         .photo-gallery {
+              padding: calc(var(--spacing-unit) * 2);
+              text-align: center;
+              border-bottom: 1px solid var(--color-border-light);
          }
+         .photo-gallery h2 {
+             font-family: 'Cormorant Garamond', serif; /* Replace with 'YourCustomFontName' */
+              margin-bottom: calc(var(--spacing-unit) * 1.5);
+         }
+         .gallery-grid {
+              display: grid;
+              grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); /* Responsive grid */
+              gap: var(--spacing-unit); /* Space between images */
+              margin-top: var(--spacing-unit);
+         }
+         .gallery-grid img {
+              width: 100%;
+              height: auto; /* Maintain aspect ratio */
+              border-radius: 5px;
+              box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+              cursor: pointer; /* Indicate clickable (if you add lightbox) */
+              transition: transform 0.2s ease, box-shadow 0.2s ease;
+              display: block; /* Remove extra space below images */
+              object-fit: cover; /* Ensure images fill their grid area nicely if varying sizes */
+         }
+          .gallery-grid img:hover {
+              transform: scale(1.03); /* Subtle zoom on hover */
+              box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+          }
 
         /* --- Footer --- */
         footer {
@@ -985,8 +985,8 @@
             // Мысалы, егер backend JSON қабылдаса:
 
             // 👇👇👇 ОСЫ ЖЕРГЕ КӨШІРІП АЛҒАН WEB APP URL-ІҢІЗДІ ҚОЙЫҢЫЗ 👇👇👇
-            // const backendUrl = 'YOUR_BACKEND_ENDPOINT_URL_FOR_TELEGRAM'; // Ескі плейсхолдер
-            const webAppUrl = 'https://script.google.com/macros/s/AKfycbyIcqbmFbXI3VweZYoP7k0lb6EqmVty3yHMzeH23-CMwBIKFqhxxjz7HhIaIRZ8vnxA/exec'; // <-- СІЗ СУРЕТТЕН КӨШІРГЕН СІЛТЕМЕ
+            // Сіздің берген URL: https://script.google.com/macros/s/AKfycbyIcqbmFbXI3VweZYoP7k0lb6EqmVty3yHMzeH23-CMwBIKFqhxxjz7HhIaIRZ8vnxA/exec
+            const webAppUrl = 'https://script.google.com/macros/s/AKfycbyIcqbmFbXI3VweZYoP7k0lb6EqmVty3yHMzeH23-CMwBIKFqhxxjz7HhIaIRZ8vnxA/exec'; // <-- СІЗ СУРЕТТЕН КӨШІРГЕН СІЛТЕМЕҢІЗДІ ОСЫ ЖЕРГЕ ҚАЙТА САЛЫҢЫЗ
 
 
             // Loading хабарламасын көрсету
@@ -996,8 +996,8 @@
 
 
             // Fetch сұрауын Backend-ке жіберу
-            fetch(webAppUrl, 
-            { 
+            fetch(webAppUrl,
+            {
                 method: 'POST', // HTTP POST әдісі
                 mode: 'cors', // Cross-Origin Resource Sharing
                 headers: {
@@ -1049,17 +1049,6 @@
 
 
             // === 👆👆👆 FETCH СҰРАУЫНЫҢ БЛОГЫНЫҢ СОҢЫ ===
-
-            // --- МЫНА АСТЫНДАҒЫ ОРЫНБАСАР (PLACEHOLDER) БЛОГЫН ӨШІРІП ТАСТАҢЫЗ ---
-            // ОЛ ТЕК BACKEND ҚОСЫЛМАҒАНДА УАҚЫТША ҚОЛДАНЫЛҒАН
-            /* (Осы жерден бастап, суреттегі көк аймақтың соңына дейінгі кодты өшіріңіз)
-             formMessage.innerText = 'Рақмет, жауабыңыз қабылданды! (Ескерту: бұл жауап әлі Telegram-ға жіберілмейді, backend қосу қажет)';
-             formMessage.style.color = 'orange';
-             formMessage.style.display = 'block';
-             rsvpForm.reset();
-             nameInput.value = '';
-            */
-            // --- ОРЫНБАСАР БЛОГЫНЫҢ СОҢЫ ---
 
 
         });
